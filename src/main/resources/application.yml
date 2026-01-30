@@ -1,0 +1,43 @@
+spring:
+  security:
+    user: # Можно удалить, если используете свою БД
+      name: admin
+      password: admin
+      roles: USER
+  docker:
+    compose:
+      enabled: false
+  application:
+    name: chirp-service
+
+datasource:
+  url: jdbc:h2:mem:chirpdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+  username: sa
+  password:
+  driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        show_sql: true
+        jdbc:
+          batch_size: 20
+    defer-datasource-initialization: false
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /v3/api-docs
