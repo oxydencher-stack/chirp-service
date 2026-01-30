@@ -1,9 +1,9 @@
 package ru.parus.chirp.controller;
 
-import java.awt.print.Pageable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.parus.chirp.model.dto.post.PostDto;
+import ru.parus.chirp.service.PostService;
 
 /**
  * PostController
@@ -31,29 +33,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PostController {
 
+    private final PostService postService;
+
     @PostMapping("/")
-    public ResponseEntity<Object> create() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PostDto> create(@RequestBody PostDto dto) {
+        return ResponseEntity.ok(postService.create(dto));
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<Object>> index(@PageableDefault Pageable pageable) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Page<PostDto>> index(@PageableDefault Pageable pageable) {
+        return ResponseEntity.ok(postService.index(pageable));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Page<Object>> show(@PathVariable Long id) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PostDto> show(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.show(id));
     }
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody Object request) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PostDto> update(@PathVariable Long id, @RequestBody PostDto dto) {
+        return ResponseEntity.ok(postService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+        postService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

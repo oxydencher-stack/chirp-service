@@ -1,5 +1,7 @@
 package ru.parus.chirp.service;
 
+import ru.parus.chirp.model.UserEntity;
+
 /**
  * UserService
  * <p>
@@ -9,4 +11,5 @@ package ru.parus.chirp.service;
  * @version 30.01.2026
  */
 public interface UserService {
+    UserEntity getCurrentUserEntity();
 }

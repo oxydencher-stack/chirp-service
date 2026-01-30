@@ -1,7 +1,10 @@
 package ru.parus.chirp.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import ru.parus.chirp.model.UserEntity;
 import ru.parus.chirp.service.UserService;
 
 /**
@@ -14,5 +17,13 @@ import ru.parus.chirp.service.UserService;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private final AuthService authService;
+
+    @Override
+    public UserEntity getCurrentUserEntity() {
+        return authService.getCurrentUserEntity();
+    }
 }
