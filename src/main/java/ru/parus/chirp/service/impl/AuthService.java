@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.parus.chirp.exception.PermissionDeniedException;
 import ru.parus.chirp.model.UserEntity;
 import ru.parus.chirp.model.dto.AuthResponseDto;
 import ru.parus.chirp.model.dto.LoginRequestDto;
@@ -66,12 +67,12 @@ public class AuthService {
     public UserEntity getCurrentUserEntity() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            return null;
+            throw new PermissionDeniedException("Пользователь не авторизован");
         }
         if (authentication.getPrincipal() instanceof UserEntity) {
             return (UserEntity) authentication.getPrincipal();
         }
-        return null;
+        throw new PermissionDeniedException("Пользователь не авторизован");
     }
 
     private AuthResponseDto createAuthResponse(String token, UserEntity user) {
