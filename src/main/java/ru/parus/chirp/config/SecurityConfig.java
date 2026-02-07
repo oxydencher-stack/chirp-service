@@ -44,7 +44,6 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/api/v1/auth/**",
-                                "/h2-console/**",      // Для доступа к H2 console
                                 "/error",
                                 "/actuator/health"
                         ).permitAll()
@@ -54,9 +53,6 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .headers(headers -> headers
-                        .frameOptions(frame -> frame.sameOrigin()) // Для H2 console
-                )
                 .userDetailsService(userDetailsService)
                 .build();
     }

@@ -11,29 +11,27 @@ spring:
     name: chirp-service
 
 datasource:
-  url: jdbc:h2:mem:chirpdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
-  username: sa
-  password:
-  driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        trace: false
-        web-allow-others: false
+  datasource:
+    url: ${JDBC_URL:jdbc:postgresql://localhost:5432/chirp_db}
+    username: ${JDBC_USER:postgres}
+    password: ${JDBC_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    dbcp2:
+      default-schema: public
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        format_sql: true
-        show_sql: true
-        jdbc:
-          batch_size: 20
-    defer-datasource-initialization: false
+      ddl-auto: ${DDL_AUTO:validate}
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  freemarker:
+    check-template-location: false
+  flyway:
+    locations: classpath:/db/migration
+    driver-class-name: org.postgresql.Driver
+    user: ${JDBC_USER:postgres}
+    password: ${JDBC_PASSWORD:postgres}
+    enabled: true
+    default-schema: public
 
 springdoc:
   swagger-ui:
