@@ -1,5 +1,6 @@
 package ru.parus.chirp.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,5 +34,6 @@ public class PostEntity  extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UserEntity owner;
 
+    @Column(name = "content", nullable = false)
     private String content;
 }

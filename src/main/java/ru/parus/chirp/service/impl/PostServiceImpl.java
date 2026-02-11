@@ -64,13 +64,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public PostDto update(Long id, PostDto dto) {
         UserEntity user = userService.getCurrentUserEntity();
         PostEntity post = postRepository.findById(id).orElseThrow(NotExistException::new);
         if (post.getOwner().getId().equals(user.getId())) {
             postMapper.patchUpdate(dto, post);
-            postRepository.save(post);
+//            postRepository.save(post);
             return postMapper.toDto(post);
         }
         throw new PermissionDeniedException();
