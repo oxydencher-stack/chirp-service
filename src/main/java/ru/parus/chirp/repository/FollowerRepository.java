@@ -29,12 +29,15 @@ public interface FollowerRepository extends JpaRepository<FollowerEntity, Long> 
     // Когда эту связь надо вытащить
     Optional<FollowerEntity> findByUserAndFollower(UserEntity user, UserEntity follower);
 
+    // Сколько у пользователя подписок (он на сколько человек подписался)
+    long countByUser(UserEntity user);
     // Получаем список на кого пользователь подписан сам
     List<FollowerEntity> findByUser(UserEntity user);
     // ТО же самое только с постраничной навигацией
     Page<FollowerEntity> findByUser(UserEntity user, Pageable pageable);
 
-
+    // Cмотрим сколько есть подписок на указанного пользователя
+    long countByFollower(UserEntity user);
     // На кого пользователь подписан сам как подписчик
     List<FollowerEntity> findByFollower(UserEntity follower);
     // ТО же самое только с постраничной навигацией

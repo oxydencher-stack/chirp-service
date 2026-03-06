@@ -8,6 +8,7 @@ import ru.parus.chirp.model.dto.UserDto;
 /**
  * UserService
  * <p>
+ *     Интерфейс для работы с данными пользователей
  * </p>
  *
  * @author Grachev.D.G  (zhulvern-92@mail.ru)
