@@ -13,6 +13,7 @@ import lombok.Data;
  */
 @Data
 public class PostDto implements Serializable {
+    private Long id;
     private String content;
     private Long userId;
 }
