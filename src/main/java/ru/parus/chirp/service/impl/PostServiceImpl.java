@@ -88,6 +88,7 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(NotExistException::new);
         if (post.getOwner().getId().equals(user.getId())) {
             postRepository.delete(post);
+            return;
         }
         throw new PermissionDeniedException();
     }
