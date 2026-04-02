@@ -3,11 +3,11 @@ package ru.parus.chirp.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.awt.print.Pageable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.parus.chirp.model.dto.UserDto;
+import ru.parus.chirp.service.UserService;
 
 /**
  * UserController
@@ -31,14 +32,15 @@ import ru.parus.chirp.model.dto.UserDto;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final UserService userService;
 
     @Operation(summary = "Просмотр текущихх пользователей в системе")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешный ответ"),
     })
     @GetMapping("/")
-    public ResponseEntity<Page<UserDto>> index(@PageableDefault Pageable pageable) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Page<UserDto>> index(@PageableDefault Pageable pageable, String username) {
+        return ResponseEntity.ok(userService.index(pageable, username));
     }
 
     @Operation(summary = "Просмотр информации о пользователе")
@@ -47,7 +49,7 @@ public class UserController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> show(@PathVariable Long id) {
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(userService.show(id));
     }
 
 }
