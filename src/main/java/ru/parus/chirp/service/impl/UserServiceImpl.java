@@ -45,7 +45,6 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.findByIdContainsIgnoreCase(pageable, username)
                 .map(userMapper::toDto);
-
     }
 
     @Override
